@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="938" height="540" viewBox="0 0 938 540" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" role="img" aria-label="Maple Ridge Residence Renovation (fictional): Electrical rough-in slips 3 working days">
+<rect width="100%" height="100%" fill="#F7F6F2"/>
+<text x="24.0" y="28.0" font-size="15" font-weight="600" fill="#1C2928" text-anchor="start">Maple Ridge Residence Renovation (fictional): Electrical rough-in slips 3 working days</text>
+<text x="24.0" y="46.0" font-size="12" font-weight="400" fill="#4A5856" text-anchor="start">37 working days · finish Wed Dec 2, 2026</text>
+<line x1="274.0" y1="58" x2="274.0" y2="496" stroke="#D6DDD8" stroke-width="1"/>
+<text x="277.0" y="54.0" font-size="10" font-weight="400" fill="#5E6B69" text-anchor="start">Oct 13</text>
+<line x1="360.5" y1="58" x2="360.5" y2="496" stroke="#D6DDD8" stroke-width="1"/>
+<text x="363.5" y="54.0" font-size="10" font-weight="400" fill="#5E6B69" text-anchor="start">Oct 20</text>
+<line x1="447.0" y1="58" x2="447.0" y2="496" stroke="#D6DDD8" stroke-width="1"/>
+<text x="450.0" y="54.0" font-size="10" font-weight="400" fill="#5E6B69" text-anchor="start">Oct 27</text>
+<line x1="533.5" y1="58" x2="533.5" y2="496" stroke="#D6DDD8" stroke-width="1"/>
+<text x="536.5" y="54.0" font-size="10" font-weight="400" fill="#5E6B69" text-anchor="start">Nov 3</text>
+<line x1="619.9" y1="58" x2="619.9" y2="496" stroke="#D6DDD8" stroke-width="1"/>
+<text x="622.9" y="54.0" font-size="10" font-weight="400" fill="#5E6B69" text-anchor="start">Nov 10</text>
+<line x1="706.4" y1="58" x2="706.4" y2="496" stroke="#D6DDD8" stroke-width="1"/>
+<text x="709.4" y="54.0" font-size="10" font-weight="400" fill="#5E6B69" text-anchor="start">Nov 17</text>
+<line x1="792.9" y1="58" x2="792.9" y2="496" stroke="#D6DDD8" stroke-width="1"/>
+<text x="795.9" y="54.0" font-size="10" font-weight="400" fill="#5E6B69" text-anchor="start">Nov 24</text>
+<line x1="879.4" y1="58" x2="879.4" y2="496" stroke="#D6DDD8" stroke-width="1"/>
+<text x="882.4" y="54.0" font-size="10" font-weight="400" fill="#5E6B69" text-anchor="start">Dec 1</text>
+<rect x="0" y="64" width="938" height="30" fill="#FFFFFF" fill-opacity="0.55"/>
+<text x="24.0" y="83.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Interior demolition</text>
+<rect x="274.0" y="72.0" width="69.2" height="14" rx="3" fill="#176B5B"/>
+<text x="24.0" y="113.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Framing modifications</text>
+<rect x="343.2" y="102.0" width="86.5" height="14" rx="3" fill="#176B5B"/>
+<rect x="0" y="124" width="938" height="30" fill="#FFFFFF" fill-opacity="0.55"/>
+<text x="24.0" y="143.0" font-size="12" font-weight="400" fill="#4A5856" text-anchor="start">Window replacement</text>
+<rect x="343.2" y="132.0" width="51.9" height="14" rx="3" fill="#8FA79F"/>
+<line x1="395.1" y1="139.0" x2="896.7" y2="139.0" stroke="#D9A452" stroke-width="2"/>
+<line x1="896.7" y1="134.0" x2="896.7" y2="144.0" stroke="#D9A452" stroke-width="2"/>
+<text x="24.0" y="173.0" font-size="12" font-weight="400" fill="#4A5856" text-anchor="start">Plumbing rough-in</text>
+<rect x="429.7" y="162.0" width="69.2" height="14" rx="3" fill="#8FA79F"/>
+<line x1="498.9" y1="169.0" x2="568.1" y2="169.0" stroke="#D9A452" stroke-width="2"/>
+<line x1="568.1" y1="164.0" x2="568.1" y2="174.0" stroke="#D9A452" stroke-width="2"/>
+<rect x="0" y="184" width="938" height="30" fill="#FFFFFF" fill-opacity="0.55"/>
+<text x="24.0" y="203.0" font-size="12" font-weight="400" fill="#4A5856" text-anchor="start">HVAC duct rough-in</text>
+<rect x="429.7" y="192.0" width="51.9" height="14" rx="3" fill="#8FA79F"/>
+<line x1="481.6" y1="199.0" x2="568.1" y2="199.0" stroke="#D9A452" stroke-width="2"/>
+<line x1="568.1" y1="194.0" x2="568.1" y2="204.0" stroke="#D9A452" stroke-width="2"/>
+<text x="24.0" y="233.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Electrical rough-in</text>
+<rect x="429.7" y="222.0" width="86.5" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="429.7" y="222.0" width="138.4" height="14" rx="3" fill="#176B5B"/>
+<rect x="0" y="244" width="938" height="30" fill="#FFFFFF" fill-opacity="0.55"/>
+<text x="24.0" y="263.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Rough-in inspection</text>
+<rect x="516.2" y="252.0" width="17.3" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="568.1" y="252.0" width="17.3" height="14" rx="3" fill="#B42318"/>
+<text x="24.0" y="293.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Insulation &amp; vapour barrier</text>
+<rect x="533.5" y="282.0" width="34.6" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="585.4" y="282.0" width="34.6" height="14" rx="3" fill="#B42318"/>
+<rect x="0" y="304" width="938" height="30" fill="#FFFFFF" fill-opacity="0.55"/>
+<text x="24.0" y="323.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Drywall hang, tape &amp; mud</text>
+<rect x="568.1" y="312.0" width="103.8" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="619.9" y="312.0" width="103.8" height="14" rx="3" fill="#B42318"/>
+<text x="24.0" y="353.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Prime &amp; paint</text>
+<rect x="671.8" y="342.0" width="69.2" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="723.7" y="342.0" width="69.2" height="14" rx="3" fill="#B42318"/>
+<rect x="0" y="364" width="938" height="30" fill="#FFFFFF" fill-opacity="0.55"/>
+<text x="24.0" y="383.0" font-size="12" font-weight="400" fill="#4A5856" text-anchor="start">Kitchen cabinets &amp; counters</text>
+<rect x="671.8" y="372.0" width="86.5" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="723.7" y="372.0" width="86.5" height="14" rx="3" fill="#B42318"/>
+<line x1="810.2" y1="379.0" x2="896.7" y2="379.0" stroke="#D9A452" stroke-width="2"/>
+<line x1="896.7" y1="374.0" x2="896.7" y2="384.0" stroke="#D9A452" stroke-width="2"/>
+<text x="24.0" y="413.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Engineered hardwood</text>
+<rect x="741.0" y="402.0" width="51.9" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="792.9" y="402.0" width="51.9" height="14" rx="3" fill="#B42318"/>
+<rect x="0" y="424" width="938" height="30" fill="#FFFFFF" fill-opacity="0.55"/>
+<text x="24.0" y="443.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Doors, trim &amp; millwork</text>
+<rect x="792.9" y="432.0" width="51.9" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="844.8" y="432.0" width="51.9" height="14" rx="3" fill="#B42318"/>
+<text x="24.0" y="473.0" font-size="12" font-weight="500" fill="#1C2928" text-anchor="start">Final clean &amp; walkthrough</text>
+<rect x="844.8" y="462.0" width="17.3" height="14" rx="3" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<rect x="896.7" y="462.0" width="17.3" height="14" rx="3" fill="#B42318"/>
+<rect x="24" y="509" width="14" height="10" rx="2" fill="#B42318"/>
+<text x="44.0" y="518.0" font-size="11" font-weight="400" fill="#4A5856" text-anchor="start">Moved</text>
+<rect x="86.5" y="509" width="14" height="10" rx="2" fill="#176B5B"/>
+<text x="106.5" y="518.0" font-size="11" font-weight="400" fill="#4A5856" text-anchor="start">Critical</text>
+<rect x="168.5" y="509" width="14" height="10" rx="2" fill="#8FA79F"/>
+<text x="188.5" y="518.0" font-size="11" font-weight="400" fill="#4A5856" text-anchor="start">Has float</text>
+<rect x="257.0" y="509" width="14" height="10" rx="2" fill="#D9A452"/>
+<text x="277.0" y="518.0" font-size="11" font-weight="400" fill="#4A5856" text-anchor="start">Float (slack)</text>
+<rect x="371.5" y="509" width="14" height="10" rx="2" fill="#9DBFAF"/>
+<text x="391.5" y="518.0" font-size="11" font-weight="400" fill="#4A5856" text-anchor="start">Complete</text>
+<rect x="453.5" y="509" width="14" height="10" rx="2" fill="none" stroke="#5E6B69" stroke-dasharray="3 2"/>
+<text x="473.5" y="518.0" font-size="11" font-weight="400" fill="#4A5856" text-anchor="start">Before the change</text>
+</svg>

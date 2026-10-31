@@ -6,11 +6,21 @@ A deterministic scheduling service for construction projects. It finds circular 
 > every schedule in it is fictional. No LLM is involved: every number comes from graph
 > algorithms that are tested against hand-computed answers and an independent library.
 
+![Electrical rough-in slips 3 working days: every downstream task moves and completion moves to Dec 2](docs/images/delay-electrical-3.svg)
+
 ```text
 'Electrical rough-in' slips 3 working days. It is on the critical path (0 days of float), so every
 working day of delay passes straight through. 8 of 8 downstream tasks start later: 'Rough-in
 inspection' (+3), 'Insulation & vapour barrier' (+3), 'Drywall hang, tape & mud' (+3), ...
 Projected completion moves from Fri Nov 27, 2026 to Wed Dec 2, 2026 (+3 working days).
+```
+
+## Quick start
+
+```bash
+uv venv && uv pip install -e ".[dev]"
+python -m dependency_engine.demo                 # 7 scenarios in the terminal
+uvicorn dependency_engine.api:app --reload       # API docs at http://localhost:8000/docs
 ```
 
 ## The problem
@@ -34,6 +44,7 @@ which tasks move, by how much, whether completion moves, and why.
 | Delay propagation: affected downstream tasks, float absorbed, completion change | `impact.delay_impact` |
 | What-if: recompute completion with new durations | `impact.what_if` |
 | Plain-English explanations of delays, float and conflicts | `impact.explain_delay` |
+| SVG schedule chart (critical tasks, float, before/after a delay) | `render.py`, `POST /v1/schedules/chart` |
 | Documented REST API (OpenAPI at `/docs`) | `api.py` |
 
 ## Algorithms
@@ -105,6 +116,10 @@ No environment variables or credentials are needed. The service is stateless: ev
 
 ## Demo walkthrough
 
+The baseline plan, rendered by `python -m dependency_engine.render residential_renovation docs/images/schedule.svg`:
+
+![Baseline schedule: critical tasks in green, float as amber whiskers](docs/images/schedule.svg)
+
 `python -m dependency_engine.demo` prints these (real output, abridged):
 
 ```text
@@ -141,6 +156,9 @@ No environment variables or credentials are needed. The service is stateless: ev
 | `POST /v1/schedules/analyze` | Dates, float, critical path, assumptions. 422 with issues if the schedule is invalid. |
 | `POST /v1/schedules/delay-impact` | `{schedule, task_id, delay_days}` → affected tasks, float absorbed, finish change, explanation |
 | `POST /v1/schedules/what-if` | `{schedule, duration_changes}` → new finish and changed tasks |
+| `POST /v1/schedules/chart` | The analysed schedule as an SVG image |
+
+![API documentation generated from the code](docs/images/api-docs.png)
 
 ```http
 POST /v1/schedules/delay-impact
@@ -185,20 +203,21 @@ See [docs/INTEGRATION.md](docs/INTEGRATION.md).
 ## Tests
 
 ```bash
-pytest                                  # 41 tests, including 800 randomized graph checks
+pytest                                  # 44 tests, including 800 randomized graph checks
 ruff check . && ruff format --check .
 pip-audit --skip-editable
 ```
 
-**Last local run: 41 passed** (macOS, Python 3.13, 31 Oct 2026). CI runs on Python 3.12 and
-also runs the demo end to end and builds the Docker image.
+**Last local run: 44 passed** (macOS, Python 3.13, 31 Oct 2026). CI runs the same suite on
+Python 3.12, runs the demo end to end, audits dependencies, and builds the Docker image.
 
 ## Security considerations
 
 - Stateless, with no persistence, authentication or secrets. Put it behind the calling application's auth if deployed.
 - **Bounded work per request.** At most 2,000 tasks, durations and delays of at most 1,000 days, and computed schedules over 10,000 working days rejected. Without that last limit, the largest valid input overflowed Python's date range and returned a 500 error; a test now covers it.
 - Unknown fields in schedules are ignored, for forward compatibility. Request bodies for `delay-impact` and `what-if` reject unknown top-level fields.
-- `pip-audit` reports advisories in `certifi` and `filelock`. Both are dev-only for this service: its runtime (FastAPI, Uvicorn, Pydantic) doesn't depend on them. The fixed releases are younger than this repo's two-week dependency window.
+- Task names are user input, so the SVG renderer XML-escapes all text (tested with a `<script>` task name). The chart response sets `nosniff`.
+- Dependencies resolve only to releases published before a fixed date (`[tool.uv] exclude-newer`) as a supply-chain precaution. `pip-audit` reports no known vulnerabilities and runs in CI.
 
 ## Engineering trade-offs
 
