@@ -1,0 +1,153 @@
+{
+  "contract_version": "1.0",
+  "project_id": "prj_maple_ridge",
+  "project_name": "Maple Ridge Residence Renovation",
+  "start_date": "2026-10-12",
+  "as_of": "2026-10-31",
+  "tasks": [
+    {
+      "id": "cmvwllmip000qjx9r94svlo1s",
+      "name": "Interior demolition & haul-away",
+      "trade": "demolition",
+      "duration_days": 4,
+      "status": "complete",
+      "percent_complete": 100,
+      "planned_start": "2026-10-12",
+      "depends_on": []
+    },
+    {
+      "id": "cmvwllmir000sjx9ruy2gbypb",
+      "name": "Framing modifications",
+      "trade": "framing",
+      "duration_days": 5,
+      "status": "complete",
+      "percent_complete": 100,
+      "planned_start": "2026-10-16",
+      "depends_on": [
+        "cmvwllmip000qjx9r94svlo1s"
+      ]
+    },
+    {
+      "id": "cmvwllmit000ujx9rirhg8vao",
+      "name": "Plumbing rough-in",
+      "trade": "plumbing",
+      "duration_days": 4,
+      "status": "complete",
+      "percent_complete": 100,
+      "planned_start": "2026-10-23",
+      "depends_on": [
+        "cmvwllmir000sjx9ruy2gbypb"
+      ]
+    },
+    {
+      "id": "cmvwllmiu000wjx9rg2ir819t",
+      "name": "HVAC duct rough-in",
+      "trade": "hvac",
+      "duration_days": 3,
+      "status": "complete",
+      "percent_complete": 100,
+      "planned_start": "2026-10-23",
+      "depends_on": [
+        "cmvwllmir000sjx9ruy2gbypb"
+      ]
+    },
+    {
+      "id": "cmvwllmiv000yjx9rk9bjc9sp",
+      "name": "Electrical rough-in",
+      "trade": "electrical",
+      "duration_days": 5,
+      "status": "in_progress",
+      "percent_complete": 60,
+      "planned_start": "2026-10-23",
+      "depends_on": [
+        "cmvwllmir000sjx9ruy2gbypb"
+      ]
+    },
+    {
+      "id": "cmvwllmiv0010jx9r3n1dnt6h",
+      "name": "Rough-in inspection (city)",
+      "trade": "general",
+      "duration_days": 1,
+      "status": "not_started",
+      "percent_complete": 0,
+      "planned_start": "2026-11-02",
+      "depends_on": [
+        "cmvwllmit000ujx9rirhg8vao",
+        "cmvwllmiu000wjx9rg2ir819t",
+        "cmvwllmiv000yjx9rk9bjc9sp"
+      ]
+    },
+    {
+      "id": "cmvwllmiw0012jx9r7yfnihre",
+      "name": "Insulation & vapour barrier",
+      "trade": "insulation",
+      "duration_days": 2,
+      "status": "not_started",
+      "percent_complete": 0,
+      "planned_start": "2026-11-03",
+      "depends_on": [
+        "cmvwllmiv0010jx9r3n1dnt6h"
+      ]
+    },
+    {
+      "id": "cmvwllmix0014jx9rcjut36tl",
+      "name": "Drywall hang, tape & mud",
+      "trade": "drywall",
+      "duration_days": 6,
+      "status": "not_started",
+      "percent_complete": 0,
+      "planned_start": "2026-11-05",
+      "depends_on": [
+        "cmvwllmiw0012jx9r7yfnihre"
+      ]
+    },
+    {
+      "id": "cmvwllmiy0016jx9r1n5130sb",
+      "name": "Prime & paint",
+      "trade": "painting",
+      "duration_days": 4,
+      "status": "not_started",
+      "percent_complete": 0,
+      "planned_start": "2026-11-13",
+      "depends_on": [
+        "cmvwllmix0014jx9rcjut36tl"
+      ]
+    },
+    {
+      "id": "cmvwllmiz0018jx9rcav7d1ee",
+      "name": "Engineered hardwood install",
+      "trade": "flooring",
+      "duration_days": 3,
+      "status": "not_started",
+      "percent_complete": 0,
+      "planned_start": "2026-11-19",
+      "depends_on": [
+        "cmvwllmiy0016jx9r1n5130sb"
+      ]
+    },
+    {
+      "id": "cmvwllmj0001ajx9rjnobq429",
+      "name": "Doors, trim & closet millwork",
+      "trade": "finish_carpentry",
+      "duration_days": 3,
+      "status": "not_started",
+      "percent_complete": 0,
+      "planned_start": "2026-11-24",
+      "depends_on": [
+        "cmvwllmiz0018jx9rcav7d1ee"
+      ]
+    },
+    {
+      "id": "cmvwllmj1001cjx9r1uhrzj6q",
+      "name": "Final clean & client walkthrough",
+      "trade": "general",
+      "duration_days": 1,
+      "status": "not_started",
+      "percent_complete": 0,
+      "planned_start": "2026-11-27",
+      "depends_on": [
+        "cmvwllmj0001ajx9rjnobq429"
+      ]
+    }
+  ]
+}

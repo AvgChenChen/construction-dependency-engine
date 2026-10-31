@@ -1,0 +1,178 @@
+{
+  "contract_version": "1.0",
+  "project_id": "maple-ridge-demo",
+  "project_name": "Maple Ridge Residence Renovation (fictional)",
+  "start_date": "2026-10-12",
+  "calendar": {
+    "workdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "holidays": [
+      "2026-10-12",
+      "2026-12-25",
+      "2026-12-28"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "demo",
+      "name": "Interior demolition",
+      "trade": "demolition",
+      "duration_days": 4,
+      "status": "complete",
+      "percent_complete": 100,
+      "depends_on": []
+    },
+    {
+      "id": "framing",
+      "name": "Framing modifications",
+      "trade": "framing",
+      "duration_days": 5,
+      "status": "complete",
+      "percent_complete": 100,
+      "depends_on": [
+        "demo"
+      ]
+    },
+    {
+      "id": "windows",
+      "name": "Window replacement",
+      "trade": "other",
+      "duration_days": 3,
+      "status": "complete",
+      "percent_complete": 100,
+      "depends_on": [
+        "demo"
+      ]
+    },
+    {
+      "id": "plumbing",
+      "name": "Plumbing rough-in",
+      "trade": "plumbing",
+      "duration_days": 4,
+      "status": "complete",
+      "percent_complete": 100,
+      "depends_on": [
+        "framing"
+      ]
+    },
+    {
+      "id": "hvac",
+      "name": "HVAC duct rough-in",
+      "trade": "hvac",
+      "duration_days": 3,
+      "status": "complete",
+      "percent_complete": 100,
+      "depends_on": [
+        "framing"
+      ]
+    },
+    {
+      "id": "electrical",
+      "name": "Electrical rough-in",
+      "trade": "electrical",
+      "duration_days": 5,
+      "status": "in_progress",
+      "percent_complete": 60,
+      "depends_on": [
+        "framing"
+      ]
+    },
+    {
+      "id": "inspection",
+      "name": "Rough-in inspection",
+      "trade": "general",
+      "duration_days": 1,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "plumbing",
+        "hvac",
+        "electrical"
+      ]
+    },
+    {
+      "id": "insulation",
+      "name": "Insulation & vapour barrier",
+      "trade": "insulation",
+      "duration_days": 2,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "inspection"
+      ]
+    },
+    {
+      "id": "drywall",
+      "name": "Drywall hang, tape & mud",
+      "trade": "drywall",
+      "duration_days": 6,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "insulation"
+      ]
+    },
+    {
+      "id": "painting",
+      "name": "Prime & paint",
+      "trade": "painting",
+      "duration_days": 4,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "drywall"
+      ]
+    },
+    {
+      "id": "cabinets",
+      "name": "Kitchen cabinets & counters",
+      "trade": "finish_carpentry",
+      "duration_days": 5,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "drywall"
+      ]
+    },
+    {
+      "id": "flooring",
+      "name": "Engineered hardwood",
+      "trade": "flooring",
+      "duration_days": 3,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "painting"
+      ]
+    },
+    {
+      "id": "trim",
+      "name": "Doors, trim & millwork",
+      "trade": "finish_carpentry",
+      "duration_days": 3,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "flooring"
+      ]
+    },
+    {
+      "id": "walkthrough",
+      "name": "Final clean & walkthrough",
+      "trade": "general",
+      "duration_days": 1,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "trim",
+        "cabinets",
+        "windows"
+      ]
+    }
+  ]
+}

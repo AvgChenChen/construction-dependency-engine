@@ -1,0 +1,72 @@
+{
+  "project_id": "textbook-cpm",
+  "project_name": "Six-activity CPM example (hand-checked)",
+  "start_date": "2026-11-02",
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "trade": "general",
+      "duration_days": 3,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": []
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "trade": "general",
+      "duration_days": 4,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "A"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "C",
+      "trade": "general",
+      "duration_days": 2,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "A"
+      ]
+    },
+    {
+      "id": "D",
+      "name": "D",
+      "trade": "general",
+      "duration_days": 5,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "B"
+      ]
+    },
+    {
+      "id": "E",
+      "name": "E",
+      "trade": "general",
+      "duration_days": 1,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "C"
+      ]
+    },
+    {
+      "id": "F",
+      "name": "F",
+      "trade": "general",
+      "duration_days": 2,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "D",
+        "E"
+      ]
+    }
+  ]
+}

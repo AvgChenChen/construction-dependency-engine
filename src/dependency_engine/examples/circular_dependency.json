@@ -1,0 +1,51 @@
+{
+  "project_id": "cyclic-example",
+  "project_name": "Invalid schedule with a circular dependency",
+  "start_date": "2026-11-02",
+  "tasks": [
+    {
+      "id": "electrical",
+      "name": "Electrical rough-in",
+      "trade": "electrical",
+      "duration_days": 5,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "drywall"
+      ]
+    },
+    {
+      "id": "drywall",
+      "name": "Drywall",
+      "trade": "drywall",
+      "duration_days": 6,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "insulation"
+      ]
+    },
+    {
+      "id": "insulation",
+      "name": "Insulation",
+      "trade": "insulation",
+      "duration_days": 2,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "electrical"
+      ]
+    },
+    {
+      "id": "paint",
+      "name": "Paint",
+      "trade": "painting",
+      "duration_days": 4,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "drywall"
+      ]
+    }
+  ]
+}

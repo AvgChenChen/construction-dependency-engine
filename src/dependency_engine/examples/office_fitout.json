@@ -1,0 +1,141 @@
+{
+  "project_id": "harbour-office-fitout",
+  "project_name": "Harbour Street Office Fit-out (fictional)",
+  "start_date": "2026-11-02",
+  "tasks": [
+    {
+      "id": "mobilize",
+      "name": "Mobilize & protect",
+      "trade": "general",
+      "duration_days": 2,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": []
+    },
+    {
+      "id": "glazing",
+      "name": "Storefront glazing (long-lead fabrication + install)",
+      "trade": "other",
+      "duration_days": 16,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "mobilize"
+      ]
+    },
+    {
+      "id": "stud",
+      "name": "Metal stud partitions",
+      "trade": "framing",
+      "duration_days": 6,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "mobilize"
+      ]
+    },
+    {
+      "id": "mep_e",
+      "name": "Electrical rough-in",
+      "trade": "electrical",
+      "duration_days": 5,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "stud"
+      ]
+    },
+    {
+      "id": "mep_m",
+      "name": "Mechanical rough-in",
+      "trade": "hvac",
+      "duration_days": 6,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "stud"
+      ]
+    },
+    {
+      "id": "mep_p",
+      "name": "Plumbing rough-in",
+      "trade": "plumbing",
+      "duration_days": 3,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "stud"
+      ]
+    },
+    {
+      "id": "ceiling_insp",
+      "name": "Above-ceiling inspection",
+      "trade": "general",
+      "duration_days": 1,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "mep_e",
+        "mep_m",
+        "mep_p"
+      ]
+    },
+    {
+      "id": "board",
+      "name": "Drywall board & finish",
+      "trade": "drywall",
+      "duration_days": 7,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "ceiling_insp"
+      ]
+    },
+    {
+      "id": "ceiling",
+      "name": "Acoustic ceiling grid & tile",
+      "trade": "other",
+      "duration_days": 4,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "board"
+      ]
+    },
+    {
+      "id": "paint",
+      "name": "Paint",
+      "trade": "painting",
+      "duration_days": 4,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "board"
+      ]
+    },
+    {
+      "id": "floor",
+      "name": "Carpet tile & LVT",
+      "trade": "flooring",
+      "duration_days": 4,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "paint",
+        "ceiling"
+      ]
+    },
+    {
+      "id": "turnover",
+      "name": "Punch list & turnover",
+      "trade": "general",
+      "duration_days": 2,
+      "status": "not_started",
+      "percent_complete": 0,
+      "depends_on": [
+        "floor",
+        "glazing"
+      ]
+    }
+  ]
+}
