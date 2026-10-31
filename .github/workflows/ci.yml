@@ -22,10 +22,10 @@ jobs:
         run: |
           uv run --no-sync ruff check .
           uv run --no-sync ruff format --check .
-      - name: Dependency audit
-        run: uv run --no-sync pip-audit --skip-editable
       - name: Tests (hand-computed examples + NetworkX cross-checks)
         run: uv run --no-sync pytest
+      - name: Dependency audit
+        run: uv run --no-sync pip-audit --skip-editable
       - name: Demo runs end to end
         run: uv run --no-sync python -m dependency_engine.demo
 
