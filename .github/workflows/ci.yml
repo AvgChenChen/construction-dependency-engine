@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - run: uv venv && uv pip install -e ".[dev]"
+      - name: Lint and format
+        run: |
+          uv run --no-sync ruff check .
+          uv run --no-sync ruff format --check .
+      - name: Dependency audit
+        run: uv run --no-sync pip-audit --skip-editable
+      - name: Tests (hand-computed examples + NetworkX cross-checks)
+        run: uv run --no-sync pytest
+      - name: Demo runs end to end
+        run: uv run --no-sync python -m dependency_engine.demo
+
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t construction-dependency-engine:ci .
