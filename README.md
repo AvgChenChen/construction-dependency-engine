@@ -66,7 +66,7 @@ flowchart LR
 
 - **Cycle detection** walks "waits on" edges with an iterative three-colour DFS. Reaching a node already on the current path means a loop, and that slice of the path *is* the cycle, so the error names it: *"'Electrical rough-in', which waits on 'Drywall', which waits on 'Insulation', which waits on 'Electrical rough-in'."*
 - **Topological order** uses Kahn's algorithm. Ties go to input order (via a min-heap), so identical input always gives identical output.
-- **CPM** runs in integer working-day offsets. Dates are only produced at the end, so the graph code never deals with weekends.
+- **CPM** runs in integer working-day offsets. Dates are only produced at the end, so the graph code never deals with weekends. [docs/WORKED_EXAMPLE.md](docs/WORKED_EXAMPLE.md) works the forward pass, backward pass and both kinds of float by hand for a six-task example.
   - Forward pass: `ES = max(EF of predecessors)`, `EF = ES + duration`.
   - Backward pass: `LF = min(LS of successors)`, `LS = LF − duration`.
   - Total float is `LS − ES`; free float is `min(ES of successors) − EF`.
