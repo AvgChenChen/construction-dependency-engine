@@ -1,16 +1,20 @@
-"""Input and output models. The input is "ScheduleContract v1" (docs/INTEGRATION.md).
+"""Input and output models. The input is ScheduleContract 1.1 (docs/INTEGRATION.md).
 
 Unknown fields are ignored so construction-ops-platform can add fields without breaking us.
+The one exception is a dependency object: an unknown key there (say, a relationship type) would
+change what the dependency means, so it is rejected rather than ignored.
 """
 
 from __future__ import annotations
 
 from datetime import date
 from enum import StrEnum
+from typing import Annotated, Any
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, field_validator, model_serializer
 
 MAX_TASKS = 2000
+MAX_LAG_DAYS = 365
 
 
 class TaskStatus(StrEnum):
@@ -35,8 +39,35 @@ class CalendarConfig(BaseModel):
         return sorted(set(v))
 
 
+class Dependency(BaseModel):
+    """A finish-to-start link: the task can start `lag_days` working days after `id` finishes."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    id: str = Field(min_length=1, max_length=100)
+    lag_days: int = Field(default=0, ge=0, le=MAX_LAG_DAYS, description="Working days to wait after the predecessor finishes.")
+
+    @model_serializer
+    def _as_contract(self) -> str | dict[str, Any]:
+        # Zero-lag links dump as plain ids, so contract 1.0 payloads come back unchanged.
+        return self.id if self.lag_days == 0 else {"id": self.id, "lag_days": self.lag_days}
+
+
+def _id_to_dependency(value: Any) -> Any:
+    return {"id": value} if isinstance(value, str) else value
+
+
+def _merge_repeats(deps: list[Dependency]) -> list[Dependency]:
+    # "start >= finish + lag" for each entry: of repeats, only the largest lag binds.
+    longest: dict[str, Dependency] = {}
+    for d in deps:
+        if d.id not in longest or d.lag_days > longest[d.id].lag_days:
+            longest[d.id] = d
+    return [longest[i] for i in dict.fromkeys(d.id for d in deps)]
+
+
 class TaskIn(BaseModel):
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="ignore", serialize_by_alias=True)
 
     id: str = Field(min_length=1, max_length=100)
     name: str = Field(min_length=1, max_length=200)
@@ -45,13 +76,29 @@ class TaskIn(BaseModel):
     status: TaskStatus = TaskStatus.not_started
     percent_complete: int = Field(default=0, ge=0, le=100)
     delay_days: int = Field(default=0, ge=0, le=1000, description="Known slip added to the remaining work.")
-    depends_on: list[str] = Field(default_factory=list, description="Finish-to-start predecessors")
+    dependencies: list[Annotated[Dependency, BeforeValidator(_id_to_dependency, json_schema_input_type=str | Dependency)]] = (
+        Field(
+            default_factory=list,
+            alias="depends_on",
+            description='Finish-to-start predecessors: a task id, or {"id": ..., "lag_days": 0..365} (contract 1.1).',
+        )
+    )
+
+    @field_validator("dependencies", mode="after")
+    @classmethod
+    def _one_link_per_predecessor(cls, v: list[Dependency]) -> list[Dependency]:
+        return _merge_repeats(v)
+
+    @property
+    def depends_on(self) -> list[str]:
+        """Predecessor ids, in input order. Use `dependencies` for lags."""
+        return [d.id for d in self.dependencies]
 
 
 class ScheduleIn(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
-    contract_version: str = "1.0"
+    contract_version: str = "1.0"  # informational; 1.0 and 1.1 payloads are both accepted
     project_id: str = Field(min_length=1, max_length=100)
     project_name: str | None = None
     start_date: date

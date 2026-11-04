@@ -78,3 +78,9 @@ def test_bundled_examples_serialise_exactly_as_on_disk(name):
     on_disk = json.loads((Path(__file__).resolve().parents[1] / "src/dependency_engine/examples" / EXAMPLES[name][1]).read_text())
     dumped = load_example(name).model_dump(mode="json", by_alias=True)
     assert [t["depends_on"] for t in dumped["tasks"]] == [t.get("depends_on", []) for t in on_disk["tasks"]]
+
+
+def test_only_depends_on_is_read_from_the_wire():
+    """`dependencies` is the internal name; a client field with that name stays an ignored unknown field."""
+    t = TaskIn.model_validate({"id": "paint", "name": "Paint", "duration_days": 3, "dependencies": ["drywall"]})
+    assert t.dependencies == [] and t.depends_on == []

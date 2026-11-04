@@ -112,3 +112,11 @@ def test_out_of_range_lag_is_a_request_validation_error():
     schedule, _ = lagged(366)
     assert client.post("/v1/schedules/analyze", json=schedule).status_code == 422
     assert client.post("/v1/schedules/validate", json=schedule).status_code == 422
+
+
+def test_openapi_schema_advertises_both_dependency_forms():
+    schemas = client.get("/openapi.json").json()["components"]["schemas"]
+    item = schemas["TaskIn-Input"]["properties"]["depends_on"]["items"]
+    assert {"type": "string"} in item["anyOf"]
+    dep = schemas["Dependency-Input"]
+    assert dep["properties"]["lag_days"]["maximum"] == 365 and dep["additionalProperties"] is False
