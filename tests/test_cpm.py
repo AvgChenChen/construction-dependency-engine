@@ -1,5 +1,6 @@
 """Every expected value here was worked out by hand (see comments) before the code ran."""
 
+import random
 from datetime import date
 
 import pytest
@@ -7,7 +8,7 @@ import pytest
 from dependency_engine.cpm import ScheduleError, analyze
 from dependency_engine.examples import load_example
 
-from .helpers import by_id, schedule
+from .helpers import by_id, random_dag, schedule
 
 
 def test_textbook_example_forward_backward_and_float():
@@ -129,3 +130,28 @@ def test_absurdly_long_schedules_are_rejected_cleanly():
     with pytest.raises(ScheduleError) as e:
         analyze(schedule(tasks))
     assert e.value.issues[0].type == "schedule_too_long"
+
+
+def test_float_invariants_hold_on_300_random_schedules():
+    """Properties every CPM result must have, checked on seeded random graphs (ENG-003).
+
+    1. A task is critical exactly when its total float is 0, and every task on the
+       reported critical path is critical.
+    2. 0 <= free float <= total float.
+    3. Total float is the same measured at either end: LS - ES == LF - EF == TF.
+    """
+    rng = random.Random(20261104)
+    checked = 0
+    for _ in range(300):
+        tasks = random_dag(rng, rng.randint(1, 40), rng.uniform(0.02, 0.4))
+        r = analyze(schedule(tasks))
+        t = by_id(r)
+        for tid in r.critical_path:
+            assert t[tid].total_float == 0, tid
+        for res in r.tasks:
+            assert res.critical == (res.total_float == 0), res.id
+            assert 0 <= res.free_float <= res.total_float, res.id
+            assert res.late_start - res.early_start == res.total_float, res.id
+            assert res.late_finish - res.early_finish == res.total_float, res.id
+            checked += 1
+    assert checked > 3000  # enough tasks to mean something
