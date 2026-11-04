@@ -77,7 +77,7 @@ flowchart LR
 These are returned in every `analyze` response, so a reader can't miss them:
 
 1. Durations are **whole working days**. The default week is Monday to Friday; `calendar.workdays` and `calendar.holidays` change it.
-2. Dependencies are **finish-to-start with no lag**. A task starts the working day after its last predecessor finishes.
+2. Dependencies are **finish-to-start with no lag**. A task starts the working day after its last predecessor finishes. Contract 1.1 lets a dependency carry `lag_days`, but a non-zero lag is refused (`422 lag_not_supported`) until the passes apply it.
 3. **Unlimited resources.** Tasks without a dependency between them can run at the same time; there is no resource levelling, and crews aren't modelled.
 4. Tasks are scheduled **as early as possible**. `planned_start` in the input is informational.
 5. **Projected mode** (`as_of` set): complete tasks need no time; in-progress tasks need `ceil(duration × (1 − percent/100))` days starting from `as_of`; no remaining work starts before `as_of`.
@@ -95,6 +95,7 @@ These are returned in every `analyze` response, so a reader can't miss them:
 | **200 random DAGs**: finish-to-start holds, floats are non-negative, free float ≤ total float, the reported critical path is a real chain whose durations add up to the project length | `test_against_networkx.py` |
 | **300 random graphs with possible cycles**: our cycle detection agrees with `nx.is_directed_acyclic_graph`, and the topological order is valid | `test_against_networkx.py` |
 | A real export from `construction-ops-platform`, unmodified, analysed with progress | `test_ops_contract.py` |
+| Contract 1.1 dependencies: plain ids and `{"id", "lag_days"}` objects both validate, out-of-range or malformed lags are rejected, zero-lag objects schedule exactly like plain ids, and the bundled examples serialise unchanged | `test_models.py`, `test_api.py` |
 
 NetworkX is a **test-only** dependency, used as an independent reference. The engine itself uses only the standard library.
 
@@ -229,7 +230,7 @@ Python 3.12, runs the demo end to end, audits dependencies, and builds the Docke
 
 ## Known limitations
 
-- Finish-to-start only: no start-to-start, finish-to-finish or lags.
+- Finish-to-start only: no start-to-start or finish-to-finish. Lags are part of the input contract (1.1) but not applied yet, so a schedule with a non-zero lag is refused rather than scheduled as if the lag weren't there.
 - No resource levelling or crew calendars.
 - Only one critical path is reported; tied paths show up through each task's `critical` flag.
 - A projected `as_of` date uses percent complete as reported, with no check on whether it's realistic.

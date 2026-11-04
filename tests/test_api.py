@@ -80,3 +80,43 @@ def test_input_limits_and_unknown_fields():
 def test_examples_on_disk_are_valid_json():
     for f in EXAMPLES.glob("*.json"):
         json.loads(f.read_text())
+
+
+def lagged(lag):
+    s = example("textbook_cpm")
+    task = next(t for t in s["tasks"] if t["depends_on"])
+    task["depends_on"] = [{"id": d, "lag_days": lag} for d in task["depends_on"]]
+    return s, task["id"]
+
+
+def test_zero_lag_objects_give_the_same_schedule_as_plain_ids():
+    plain = client.post("/v1/schedules/analyze", json=example("textbook_cpm"))
+    objects = client.post("/v1/schedules/analyze", json=lagged(0)[0])
+    assert plain.status_code == objects.status_code == 200
+    assert plain.json() == objects.json()
+
+
+def test_a_nonzero_lag_is_refused_until_the_engine_applies_it():
+    """Contract 1.1 accepts lags, but the CPM passes don't apply them yet. A silently ignored lag
+    would give finish dates that are too early, so the engine says so instead."""
+    schedule, task_id = lagged(2)
+    r = client.post("/v1/schedules/analyze", json=schedule)
+    assert r.status_code == 422
+    issue = r.json()["issues"][0]
+    assert issue["type"] == "lag_not_supported" and issue["task_ids"][0] == task_id
+    v = client.post("/v1/schedules/validate", json=schedule).json()
+    assert v["valid"] is False and v["issues"][0]["type"] == "lag_not_supported"
+
+
+def test_out_of_range_lag_is_a_request_validation_error():
+    schedule, _ = lagged(366)
+    assert client.post("/v1/schedules/analyze", json=schedule).status_code == 422
+    assert client.post("/v1/schedules/validate", json=schedule).status_code == 422
+
+
+def test_openapi_schema_advertises_both_dependency_forms():
+    schemas = client.get("/openapi.json").json()["components"]["schemas"]
+    item = schemas["TaskIn-Input"]["properties"]["depends_on"]["items"]
+    assert {"type": "string"} in item["anyOf"]
+    dep = schemas["Dependency-Input"]
+    assert dep["properties"]["lag_days"]["maximum"] == 365 and dep["additionalProperties"] is False

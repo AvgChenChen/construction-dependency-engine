@@ -54,13 +54,32 @@ def cycle_issue(cycle: list[str], names: dict[str, str]) -> Issue:
     )
 
 
+def lag_issues(schedule: ScheduleIn) -> list[Issue]:
+    """Contract 1.1 accepts lags, but the forward and backward passes don't apply them yet.
+    Ignoring a lag would report finish dates that are too early, so refuse instead."""
+    names = {t.id: t.name for t in schedule.tasks}
+    return [
+        Issue(
+            type="lag_not_supported",
+            message=(
+                f"'{t.name}' waits {d.lag_days} working day(s) after '{names.get(d.id, d.id)}' finishes. "
+                "This engine version accepts lags but can't schedule them yet; send lag_days 0 for now."
+            ),
+            task_ids=[t.id, d.id],
+        )
+        for t in schedule.tasks
+        for d in t.dependencies
+        if d.lag_days > 0
+    ]
+
+
 def validate(schedule: ScheduleIn) -> list[Issue]:
     issues = structural_issues(schedule.tasks)
     if not issues:
         cycle = find_cycle(schedule.tasks)
         if cycle:
             issues.append(cycle_issue(cycle, {t.id: t.name for t in schedule.tasks}))
-    return issues
+    return issues + lag_issues(schedule)
 
 
 def remaining_duration(task: TaskIn, projected: bool) -> int:
