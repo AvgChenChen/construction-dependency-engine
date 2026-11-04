@@ -62,10 +62,35 @@ Ops stores these as uppercase PostgreSQL enums (`ELECTRICAL`) and lowercases the
 ```
 
 - `duration_days` are **working days** (Monday to Friday unless a `calendar` object says otherwise).
-- `depends_on` lists predecessors with **finish-to-start** semantics.
+- `depends_on` lists predecessors with **finish-to-start** semantics. Each item is a task id, or (contract 1.1) an object with a lag; see below.
 - `as_of` is optional. When present, the engine projects remaining work from that date using status and percent complete.
 - `planned_start` is informational. The engine schedules each task as early as its dependencies allow.
 - Unknown fields are ignored, so either side can add fields without breaking the other.
+
+### Contract 1.1: dependency lags
+
+A `depends_on` item may be an object instead of a plain id:
+
+```json
+"depends_on": ["cmvw_electrical", {"id": "cmvw_drywall", "lag_days": 2}]
+```
+
+- `lag_days` is a whole number of **working days** from 0 to 365, on the same calendar as
+  `duration_days`. With a lag of 2, the task can start two working days later than it otherwise
+  could. It defaults to 0, so `{"id": "x"}` means the same as `"x"`.
+- Plain ids still work, and both forms can be mixed in one list. Every 1.0 payload is a valid
+  1.1 payload with the same meaning.
+- Unlike the rest of the contract, a dependency object may not contain unknown keys. A key such
+  as a relationship type would change what the dependency means, so ignoring it would be wrong;
+  the request is rejected with a validation error.
+- If the same predecessor appears more than once, the largest lag applies (each entry is a
+  constraint, and the largest is the one that binds).
+- `contract_version` stays informational: the engine reads both forms whatever it says.
+- **Engine support:** lags are accepted and validated, but the scheduling passes don't apply
+  them yet. A schedule with any non-zero lag is refused with `422` and an issue of type
+  `lag_not_supported`, so a lag is never silently ignored. Zero lags schedule normally.
+- When the engine writes a schedule back (for example `GET /v1/examples/{name}`), zero-lag links
+  are plain ids and the rest are objects.
 
 ## ExtractionResult v1 (Agent → Ops)
 
