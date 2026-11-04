@@ -10,17 +10,7 @@ import networkx as nx
 from dependency_engine.cpm import analyze
 from dependency_engine.graph import find_cycle, topological_order
 
-from .helpers import by_id, schedule
-
-
-def random_dag(rng: random.Random, n: int, p: float):
-    # Edges only go from lower to higher index, which guarantees no cycles.
-    tasks = []
-    for i in range(n):
-        deps = [f"t{j}" for j in range(i) if rng.random() < p]
-        tasks.append((f"t{i}", rng.randint(0, 10), deps))
-    rng.shuffle(tasks)  # input order shouldn't matter
-    return tasks
+from .helpers import by_id, random_dag, schedule
 
 
 def longest_path_networkx(tasks) -> int:
