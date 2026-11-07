@@ -14,6 +14,16 @@ from .models import CalendarConfig
 _MAX_SCAN = 20_000  # ~55 years of calendar days; guards against a calendar with no working days
 
 
+class CalendarRangeError(ValueError):
+    """The requested working day falls outside Python's supported date range."""
+
+
+def _next_day(d: date) -> date:
+    if d == date.max:
+        raise CalendarRangeError("The calendar needs a working day after 9999-12-31. Use an earlier date or shorter schedule.")
+    return d + timedelta(days=1)
+
+
 class WorkCalendar:
     def __init__(self, start: date, config: CalendarConfig | None = None):
         config = config or CalendarConfig()
@@ -29,7 +39,7 @@ class WorkCalendar:
         for _ in range(_MAX_SCAN):
             if self.is_workday(d):
                 return d
-            d += timedelta(days=1)
+            d = _next_day(d)
         raise ValueError("calendar has no working days")
 
     def date_for_offset(self, offset: int) -> date:
@@ -37,7 +47,7 @@ class WorkCalendar:
         if offset < 0:
             raise ValueError("offset must be >= 0")
         while len(self._days) <= offset:
-            self._days.append(self.next_workday_on_or_after(self._days[-1] + timedelta(days=1)))
+            self._days.append(self.next_workday_on_or_after(_next_day(self._days[-1])))
         return self._days[offset]
 
     def offset_for_date(self, d: date) -> int:

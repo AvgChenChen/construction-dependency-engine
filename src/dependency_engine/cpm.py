@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import math
 
-from .calendar import WorkCalendar
+from .calendar import CalendarRangeError, WorkCalendar
 from .graph import find_cycle, predecessors, structural_issues, successors, topological_order
 from .models import Issue, ScheduleIn, ScheduleResult, TaskIn, TaskResult, TaskStatus
 
@@ -93,6 +93,14 @@ def remaining_duration(task: TaskIn, projected: bool) -> int:
 
 
 def analyze(schedule: ScheduleIn) -> ScheduleResult:
+    """Analyse a schedule, reporting unrepresentable dates as input errors."""
+    try:
+        return _analyze(schedule)
+    except CalendarRangeError as exc:
+        raise ScheduleError([Issue(type="calendar_out_of_range", message=str(exc), task_ids=[])]) from exc
+
+
+def _analyze(schedule: ScheduleIn) -> ScheduleResult:
     issues = validate(schedule)
     if issues:
         raise ScheduleError(issues)

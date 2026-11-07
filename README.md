@@ -216,6 +216,7 @@ Python 3.12, runs the demo end to end, audits dependencies, and builds the Docke
 
 - Stateless, with no persistence, authentication or secrets. Put it behind the calling application's auth if deployed.
 - **Bounded work per request.** At most 2,000 tasks, durations and delays of at most 1,000 days, and computed schedules over 10,000 working days rejected. Without that last limit, the largest valid input overflowed Python's date range and returned a 500 error; a test now covers it.
+- **Date-range errors.** A start, projection, or calculated working day beyond `9999-12-31` returns `422 invalid_schedule` with a `calendar_out_of_range` issue instead of an unhandled date overflow. A one-day task on the final supported working date remains valid.
 - Unknown fields in schedules are ignored, for forward compatibility. Request bodies for `delay-impact` and `what-if` reject unknown top-level fields.
 - Task names are user input, so the SVG renderer XML-escapes all text (tested with a `<script>` task name). The chart response sets `nosniff`.
 - Dependencies resolve only to releases published before a fixed date (`[tool.uv] exclude-newer`) as a supply-chain precaution. `pip-audit` reports no known vulnerabilities and runs in CI.
